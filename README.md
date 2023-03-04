@@ -1,6 +1,6 @@
 # Hospital-Readmissions
 
-![My Image](Images/pearsoncorrelation.png)
+![Pearson Correlation](Images/pearsoncorrelation.png)
 
 ## Overview
 
