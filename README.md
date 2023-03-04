@@ -52,6 +52,8 @@ For our project, we split our validation data into **10** different sets and ran
 
 ## Machine Learning Methods
 
+We used linear classifiers, decision trees, neural networks, and random forests for predicting hospital readmission.  My contribution was sole work on the linear classifiers and neural networks.
+
 ## Experiments
 
 ## Results
