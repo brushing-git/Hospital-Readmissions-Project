@@ -10,7 +10,7 @@ This project is directly relevant to any organization that has extensive records
 
 The machine learning methods that myself and my teammates employed include **linear classifiers, decision trees, neural networks, and random forests**.  These are all examples of **supervised learning**, where models are trained like students at school based on their ability to give correct answers and learn from their mistakes.  We estimated model accuracy with **ROC-AUC** and performed model evaluation via **K-fold cross-validation**.  The software we used included **pandas, numpy, matplotlib, jupyter notebook, scikit-learn, and pytorch**.
 
-My project teammates were [Kate Deyneka](https://www.linkedin.com/in/edeyneka/) and [Brian Tran](https://www.linkedin.com/in/brian-d-tran/).  **The contributions I provided in the project include help with data grooming and manipulation and sole work on linear classifiers and neural networks.**. I also helped author our final report.
+My project teammates were [Kate Deyneka](https://www.linkedin.com/in/edeyneka/) and [Brian Tran](https://www.linkedin.com/in/brian-d-tran/).  **The contributions I provided in the project include help with data grooming and manipulation and sole work on linear classifiers and neural networks.**  I also helped author our final report.
 
 ## Data Sets
 
