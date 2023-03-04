@@ -44,6 +44,8 @@ We compute the false positive rate by taking the ratio of the quantity of false 
 
 $$ FPR = \frac{FP}{FP + TN} $$
 
+Intuitively, we can think about ROC-AUC as measuring how well our model guesses correctly to incorrectly (hits relative to misses).  Our model estimates probabilities for the underlying distribution of categorical labels.  This is called the ROC curve.  Random guessing would equate to equal TPR and FPR.  Better than random guessing would be to maximize TPR relative to FPR.  We then measure the relative area under our ROC curve with respect to random guessing.  This area under the curve indicates how well our model can separate the distributions corresponding to our different labels.  So a higher ROC-AUC, the better our model:  1 being perfect, 0.5 indicating random guessing, and 0 being the worst.
+
 ## Machine Learning Methods
 
 ## Experiments
