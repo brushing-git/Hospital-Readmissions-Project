@@ -1,5 +1,7 @@
 # Hospital-Readmissions
 
+![My Image](Images/pearsoncorrelation.png)
+
 ## Overview
 
 ## Data Sets
