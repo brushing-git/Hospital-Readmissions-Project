@@ -34,6 +34,16 @@ After preprocessing, the data set was split into training and test data with the
 
 ## Statistical Methods
 
+The primary methods we used to evaluate our models was **Area under the Receiver Operating Charcteristic curve (ROC-AUC)** and **K-fold cross-validation**.
+
+ROC-AUC is a measure of accuracy by measuring a model's true positive and false positive rates.  The true positive rate ($TPR$) is the probability that a model predicts a label given the ground truth label being that label; the false positive rate ($FPR$) is the probability that a model predicts some other label given the ground truth label.  We compute the true positive rate by taking the ratio of the quantity of true positives $TP$ (number of hits on the correct label) by the sum of the true positives plus the false negatives $FN$ (number of misses on the correct label):
+
+$$ TPR = \frac{TP}{TP + FN} $$
+
+We compute the false positive rate by taking the ratio of the quantity of false positives $FP$ (number of hits on the incorrect label) by the sum of the false positives plus the true negatives $TN$ (number of misses on the incorrect label):
+
+$$ FPR = \frac{FP}{FP + TN} $$
+
 ## Machine Learning Methods
 
 ## Experiments
