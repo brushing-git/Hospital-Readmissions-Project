@@ -18,9 +18,19 @@ The data set we used is the [diabetes 130-US hospitals set](https://archive-beta
 
 Importantly, the data as presented is a **dirty data set**:  it contains missing entries, duplicate entries, and outlandish values.  We had to do extensive cleaning.  We preprocessed the data using `pandas`, and we leveraged the `pandas-profiling` (found [here](https://pypi.org/project/pandas-profiling/)) module to generate initial diagnostics about the data.  The profile report can be found [here](report.html).  An example of the dirty data can be found below.
 
-[dirty data](Images/OriginalData.png)
+![dirty data](Images/OriginalData.png)
 
-To clean our data we did the following.  Missing entries for features and those labeled with a `?` were entered with a `NaN`.  Almost all of the missing entries were in a select few features such as *weight*, which had $97\%$ of its entries missing and *payer_code*, which had $39\%$ of its entries missing.  Because these features were either largely missing or seemed to have little application to the target problem, we opted to drop those features.  This reduced our features to 47.  Duplicate entries (duplicate patients) were also dropped, where we only kept the initial admission into the hospital.  Finally, many of our features had extreme values.  This can bias machine learning algorithms.  Consequently, we scaled these values:  for numeric entries we subtracted the mean and divided by the variance for the specific features and for categorical features we turned them into one-hot encodings.  We also used integer encodings for categorical data and experimented for their effectiveness.  We found this integer data to be problematic.  So we used the one-hot data for our experiments.
+To clean our data we did the following.  Missing entries for features and those labeled with a `?` were entered with a `NaN`.  Almost all of the missing entries were in a select few features such as *weight*, which had $97\%$ of its entries missing and *payer_code*, which had $39\%$ of its entries missing.  Because these features were either largely missing or seemed to have little application to the target problem, we opted to drop those features.  Duplicate entries (duplicate patients) were also dropped, where we only kept the initial admission into the hospital.  Finally, many of our features had extreme values.  This can bias machine learning algorithms.  Consequently, we scaled these values:  for numeric entries we subtracted the mean and divided by the variance for the specific features and for categorical features we turned them into one-hot encodings.  We also used integer encodings for categorical data and experimented for their effectiveness.  We found this integer data to be problematic.  So we used the one-hot data for our experiments.
+
+An example of the cleaned data can be seen below:
+
+![clean data](Images/CleanedData1Hot.png)
+
+The dropping of features and addition of one-hot encoding resulted in a cleaned data set with 47 features.  This can be found in the clean data set folder [here](CleanedData/).
+
+For our ground truth-label, we wanted to predict hospital readmission.  The original hospital admission feature had multiple entries, indicating the number of days since readmission.  We decided to use *any readmission* as a readmission; our cut-off dates were infinitely long.  Readmission is now a binary random variable.
+
+After preprocessing, the data set was split into training and test data with the labels separated from the features.  Lastly, we noticed that there was some imbalances in the number of readmits based on dropped duplicate entries.  So we rebalanced the data, and used the balanced data for our training and testing.
 
 ## Statistical Methods
 
