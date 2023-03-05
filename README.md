@@ -54,11 +54,13 @@ For our project, we split our validation data into **10** different sets and ran
 
 We used linear classifiers, decision trees, neural networks, and random forests for predicting hospital readmission.  My contribution was work on the **linear classifiers and neural networks**.  Both of my methods were trained using **stochastic gradient descent** in `pytorch`.
 
-A linear classifier is a prediction based on a weighted sum of features.  That is our prediction is the label whose parameters maximize a linear sum of the features. If $\overline{x} = (x_{1}, \dots, x_{k})$ are our features and $\overline{\theta} = (\theta_{1}^{y}, \dots, \theta_{k}^{y})$ are our weights for label $y$ of our available labels $Y$ and $\Theta$ is the set of every weights, then the prediction is $f$:
+A linear classifier is a prediction based on a weighted sum of features.  It is the discrete version of a linear regression where we have to make categorical predictions instead of continous ones.  Our prediction is the label whose parameters maximize a linear sum of the features. If $\overline{x} = (x_{1}, \dots, x_{k})$ are our features and $\overline{\theta} = (\theta_{1}^{y}, \dots, \theta_{k}^{y})$ are our weights for label $y$ of our available labels $Y$ and $\Theta$ is the set of every weights, then the prediction is $f$:
 
-$$ f(\overline{x}; \Theta)) = \underset{y \in Y}{\arg \max} \underset{i=1}{\overset{k}{\sum}} \theta_{i}^{y}x_{i} $$
+$$ f(\overline{x}; \Theta) = \underset{y \in Y}{\arg \max} \underset{i=1}{\overset{k}{\sum}} \theta_{i}^{y}x_{i} $$
 
-Intuitively, if we plot our samples in space whose dimensions are given by our $k$ features, the linear classifier separates samples by drawing a "line" (hyperplane) through that space.
+Intuitively, if we plot our samples in space whose dimensions are given by our $k$ features, the linear classifier separates samples by drawing a "line" (hyperplane) through that space.  Our model is characterized by this "decision line", and we can think of our weights as specifying where that "decision line" lies in feature space.
+
+Neural networks are an extension of linear classifiers.  Often, our features cannot be separated by such a "decision line".  However, by transforming our feature space, we can sort our samples so that they can be linearly separated.  A neural network is a method for learning how to transform our features.  We do this by passing our features through successive linear and non-linear transformations.  Each successive pass is called a layer
 
 ## Experiments
 
