@@ -52,7 +52,7 @@ For our project, we split our validation data into **10** different sets and ran
 
 ## Machine Learning Methods
 
-We used linear classifiers, decision trees, neural networks, and random forests for predicting hospital readmission.  My contribution was work on the **linear classifiers and neural networks**.  Both of my methods were trained using **stochastic gradient descent** in `pytorch`.  In addition, regularization techniques were employed such as **L2 weight decay, early stopping, and dropout**.
+We used linear classifiers, decision trees, neural networks, and random forests for predicting hospital readmission.  My contribution was work on the **linear classifiers and neural networks**.  Both of my methods were trained using **stochastic gradient descent** in `pytorch`.  In addition, regularization techniques were employed such as **L2, early stopping, and dropout**.
 
 A linear classifier is a prediction based on a weighted sum of features.  It is the discrete version of a linear regression where we have to make categorical predictions instead of continous ones.  Our prediction is the label whose parameters maximize a linear sum of the features. If $\overline{x} = (x_{1}, \dots, x_{k})$ are our features and $\overline{\theta} = (\theta_{0}^{y}, \theta_{1}^{y}, \dots, \theta_{k}^{y})$ are our weights for label $y$ of our available labels $Y$ and $\Theta$ is the set of every weights, then the prediction is $f$:
 
@@ -70,7 +70,9 @@ In my neural networks, I used an ensemble of models.  Those models varied from 1
 
 The key parameters that drive the ability for linear classifiers and neural networks are the weights.  Initially, these weights are random, but over time, a machine learning model learns these weights via a learning algorithm.  The algorithm of choice is stochastic gradient descent.  Intuively, gradient descent is an optimization procedure through parameter space that adjusts parameters by following the contours of that space to valleys called local minima.  In the case of model optimization, a model's parameters are adjusted by decreasing the weights that contributed to the model's error on the training data set.  This can be expensive, however, so we only evaluate the model's error rate on a small sample of training data.  Our random sampling procedure is what makes this "stochastic".
 
+I used the **ADAM optimizer** found in `pytorch` to implement gradient descent.
 
+Regularization is collection of methods that aim to prevent models from simply memorizing (overfitting) the data.  The goal for a good predictive algorithm is that it can generalize to new instances it has not seen so far.  Intuitively, regularization can be thought of penalizing models for their complexity and encouraging simplicity.  The regularization methods I used include L2, early stopping, and dropout.  L2 regularization modifies the error (or loss or cost) function by adding to the error the sum of the square of the weights multiplied by a $\lambda$ parameter; the thought is that bigger weights lead to more overfitting so those bigger weights are penalized by some factor $\lambda$.  Early stopping is a method by which we stop models early in the training process to prevent them from committing too much memorization.
 
 ## Experiments
 
