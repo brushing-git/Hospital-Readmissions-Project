@@ -74,7 +74,11 @@ I used the **Adam optimizer** found in `pytorch` to implement gradient descent.
 
 Regularization is collection of methods that aim to prevent models from simply memorizing (overfitting) the data.  The goal for a good predictive algorithm is that it can generalize to new instances it has not seen so far.  Intuitively, regularization can be thought of penalizing models for their complexity and encouraging simplicity.  The regularization methods I used include L2, early stopping, and dropout.  L2 regularization modifies the error (or loss or cost) function by adding to the error the sum of the square of the weights multiplied by a $\lambda$ parameter; the thought is that bigger weights lead to more overfitting so those bigger weights are penalized by some factor $\lambda$.  Early stopping is a method by which we stop models early in the training process to prevent them from committing too much memorization.  Dropout is an ensemble method for regularization.  It works by forcing the model during training to use only a certain portion of its parameters for making predictions.  This can be thought of as a "wisdom of the crowds" method because the model is really an ensemble of simpler predictors after drop out training.
 
+I used the applicable functions for L2 and dropout found in `pytorch`.  Early stopping was directly implemented by my code.
+
 ## Experiments
+
+I conducted a series of experiments with linear classifiers and neural networks.  The first experiments were with linear classifiers to find a good baseline for evaluating model performance.
 
 ## Results
 
