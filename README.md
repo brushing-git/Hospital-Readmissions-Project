@@ -64,9 +64,9 @@ Neural networks are an extension of linear classifiers.  Often, our features can
 
 $$ g(\overline{x}; \Theta) = \phi (\overline{\theta}_{j} \cdot \phi (\overline{\theta}_{j-1} \cdot \phi (\overline{\theta}_{j-2} \cdot \dots \phi (\overline{\theta}_{1} \cdot \overline{x}) \dots )) $$
 
-Here we think about the sum and products as dot products.  The name of neural network comes from interpreting each matrix as a layer of neurons and each column in the matrix as corresponding to the weights a particular neuron assigns to its inputs, which are the rows in the matrix.
+Here we think about the sum and products as dot products.  The name "neural network" comes from interpreting each matrix as a layer of neurons and each column in the matrix as corresponding to the weights a particular neuron assigns to its inputs (the rows in the matrix).  Intuitively, we can think of each neuron weighing its inputs (the entries in the column) and then summing over those inputs.  This sum is then fed to a non-linear function, sometimes called an activation function, which decides how the neuron "fires" in response to its inputs.
 
-Unlike
+The key parameters that drive the ability for linear classifiers and neural networks are the weights.  Initially, these weights are random, but over time, a machine learning model learns these weights via a learning algorithm.  The algorithm of choice is stochastic gradient descent.  Intuively, gradient descent is an optimization procedure through parameter space that adjusts parameters by following the contours of that space to valleys called local minima.  In the case of model optimization, a model's parameters are adjusted by decreasing the weights that contributed to the model's error on the training data set.  This can be expensive, however, so we only evaluate the model's error rate on a small sample of training data.  Our random sampling procedure is what makes this "stochastic".
 
 ## Experiments
 
