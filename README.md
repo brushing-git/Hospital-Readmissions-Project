@@ -1,4 +1,4 @@
-# Hospital-Readmissions
+# Predicting Hospital Readmissions
 
 ![Pearson Correlation](Images/pearsoncorrelation.png)
 
@@ -64,7 +64,9 @@ Neural networks are an extension of linear classifiers.  Often, our features can
 
 $$ g(\overline{x}; \Theta) = \phi (\overline{\theta}_{j} \cdot \phi (\overline{\theta}_{j-1} \cdot \phi (\overline{\theta}_{j-2} \cdot \dots \phi (\overline{\theta}_{1} \cdot \overline{x}) \dots )) $$
 
-Here we think about the sum and products as dot products.  The name of neural network comes from interpreting each matrix as a layer of neurons and each column in the matrix as corresponding to the weights a particular neuron assigns to its inputs.
+Here we think about the sum and products as dot products.  The name of neural network comes from interpreting each matrix as a layer of neurons and each column in the matrix as corresponding to the weights a particular neuron assigns to its inputs, which are the rows in the matrix.
+
+Unlike
 
 ## Experiments
 
