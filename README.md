@@ -32,7 +32,7 @@ For our ground truth-label, we wanted to predict hospital readmission.  The orig
 
 After preprocessing, the data set was split into training and test data with the labels separated from the features.  Lastly, we noticed that there was some imbalances in the number of readmits based on dropped duplicate entries.  So we rebalanced the data, and used the balanced data for our training and testing.
 
-Our training data set was split 80:20 into training and validation sets.  The validation set was then randomly split into 10 validation sets for cross-validation.
+Our training data set was split 80/20 into training and validation sets.  The validation set was then randomly split into 10 validation sets for cross-validation.  Lastly, we created a separate held out test set to run models against.
 
 ## Statistical Methods
 
@@ -68,7 +68,7 @@ $$ g(\overline{x}; \Theta) = \phi (\overline{\theta}_{j} \cdot \phi (\overline{\
 
 Here we think about the sum and products as dot products.  The name "neural network" comes from interpreting each matrix as a layer of neurons and each column in the matrix as corresponding to the weights a particular neuron assigns to its inputs (the rows in the matrix).  Intuitively, we can think of each neuron weighing its inputs (the entries in the column) and then summing over those inputs.  This sum is then fed to a non-linear function, sometimes called an activation function, which decides how the neuron "fires" in response to its inputs.
 
-Every neural network model used the **rectified linear unit (RELU)** given by $\max (0, \overline{x})$.
+Every neural network model used the **rectified linear unit (RELU)** given by $\max (0, \overline{x})$ for its non-linear transformation (activation function).
 
 The key parameters that drive the ability for linear classifiers and neural networks are the weights.  Initially, these weights are random, but over time, a machine learning model learns these weights via a learning algorithm.  The algorithm of choice is stochastic gradient descent.  Intuively, gradient descent is an optimization procedure through parameter space that adjusts parameters by following the contours of that space to valleys called local minima.  In the case of model optimization, a model's parameters are adjusted by decreasing the weights that contributed to the model's error on the training data set by some parameter $\eta$ called the learning rate.  This can be expensive, however, so we only evaluate the model's error rate on a small sample of training data.  Our random sampling procedure is what makes this "stochastic".
 
@@ -118,3 +118,7 @@ L2 Regularization | Early Stopping | Dropout
 ![L2](Images/l2reg-2.png) | ![early](Images/early_stopping-3.png) | ![dropout](Images/dropout.png)
 
 ## Discussion
+
+Overall, regularization seemed to have a mostly negative effect.  We hypothesized this is due to the size of the problem and the size of the neural networks used.  Most of my networks were fairly small in parameter counts (for compute reasons).  Plus we only had 47 features to use, which is a fairly small number of features.  Training was also limited because of compute, which affected the success of regularization techniques.
+
+From this data, I elected for the following ideal model.  The model has 2 layers of 8 nodes each.  I ran with this model because it was clear that a healthy compression ratio helped with performance and higher parameter counts did not help with this problem.  We used early stopping with only 10 epochs of training.  No dropout was used.  Final performance on training and validation had ROC-AUC values of $0.6628$ and $0.6669$ for training and validation sets respectively.  This model was then used on our special test data set and found to have a ROC-AUC of $0.6554$, which was significantly better than linear classifiers and decision trees, but below our best random forests ($0.6682$).
