@@ -52,7 +52,7 @@ For our project, we split our validation data into **10** different sets and ran
 
 ## Machine Learning Methods
 
-We used linear classifiers, decision trees, neural networks, and random forests for predicting hospital readmission.  My contribution was work on the **linear classifiers and neural networks**.  Both of my methods were trained using **stochastic gradient descent** in `pytorch`.
+We used linear classifiers, decision trees, neural networks, and random forests for predicting hospital readmission.  My contribution was work on the **linear classifiers and neural networks**.  Both of my methods were trained using **stochastic gradient descent** in `pytorch`.  In addition, regularization techniques were employed such as **L2 weight decay, early stopping, and dropout**.
 
 A linear classifier is a prediction based on a weighted sum of features.  It is the discrete version of a linear regression where we have to make categorical predictions instead of continous ones.  Our prediction is the label whose parameters maximize a linear sum of the features. If $\overline{x} = (x_{1}, \dots, x_{k})$ are our features and $\overline{\theta} = (\theta_{0}^{y}, \theta_{1}^{y}, \dots, \theta_{k}^{y})$ are our weights for label $y$ of our available labels $Y$ and $\Theta$ is the set of every weights, then the prediction is $f$:
 
@@ -66,7 +66,11 @@ $$ g(\overline{x}; \Theta) = \phi (\overline{\theta}_{j} \cdot \phi (\overline{\
 
 Here we think about the sum and products as dot products.  The name "neural network" comes from interpreting each matrix as a layer of neurons and each column in the matrix as corresponding to the weights a particular neuron assigns to its inputs (the rows in the matrix).  Intuitively, we can think of each neuron weighing its inputs (the entries in the column) and then summing over those inputs.  This sum is then fed to a non-linear function, sometimes called an activation function, which decides how the neuron "fires" in response to its inputs.
 
+In my neural networks, I used an ensemble of models.  Those models varied from 1 to 5 layers with between 4 to 100 neurons per layer.  I also experimented with neural networks that "compressed" information by moving from larger layers (more neurons) to smaller layers (less neurons) on a fixed number of 180 neurons.
+
 The key parameters that drive the ability for linear classifiers and neural networks are the weights.  Initially, these weights are random, but over time, a machine learning model learns these weights via a learning algorithm.  The algorithm of choice is stochastic gradient descent.  Intuively, gradient descent is an optimization procedure through parameter space that adjusts parameters by following the contours of that space to valleys called local minima.  In the case of model optimization, a model's parameters are adjusted by decreasing the weights that contributed to the model's error on the training data set.  This can be expensive, however, so we only evaluate the model's error rate on a small sample of training data.  Our random sampling procedure is what makes this "stochastic".
+
+
 
 ## Experiments
 
