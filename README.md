@@ -52,7 +52,13 @@ For our project, we split our validation data into **10** different sets and ran
 
 ## Machine Learning Methods
 
-We used linear classifiers, decision trees, neural networks, and random forests for predicting hospital readmission.  My contribution was sole work on the linear classifiers and neural networks.
+We used linear classifiers, decision trees, neural networks, and random forests for predicting hospital readmission.  My contribution was work on the **linear classifiers and neural networks**.  Both of my methods were trained using **stochastic gradient descent** in `pytorch`.
+
+A linear classifier is a prediction based on a weighted sum of features.  That is our prediction is the label whose parameters maximize a linear sum of the features. If $\overline{x} = (x_{1}, \dots, x_{k})$ are our features and $\overline{\theta} = (\theta_{1}^{y}, \dots, \theta_{k}^{y})$ are our weights for label $y$ of our available labels $Y$ and $\Theta$ is the set of every weights, then the prediction is $f$:
+
+$$ f(\overline{x}; \Theta)) = \underset{y \in Y}{\arg \max} \underset{i=1}{\overset{k}{\sum}} \theta_{i}^{y}x_{i} $$
+
+Intuitively, if we plot our samples in space whose dimensions are given by our $k$ features, the linear classifier separates samples by drawing a "line" (hyperplane) through that space.
 
 ## Experiments
 
