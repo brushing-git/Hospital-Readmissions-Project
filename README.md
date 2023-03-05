@@ -32,6 +32,8 @@ For our ground truth-label, we wanted to predict hospital readmission.  The orig
 
 After preprocessing, the data set was split into training and test data with the labels separated from the features.  Lastly, we noticed that there was some imbalances in the number of readmits based on dropped duplicate entries.  So we rebalanced the data, and used the balanced data for our training and testing.
 
+Our training data set was split 80:20 into training and validation sets.  The validation set was then randomly split into 10 validation sets for cross-validation.
+
 ## Statistical Methods
 
 The primary methods we used to evaluate our models was **Area under the Receiver Operating Charcteristic curve (ROC-AUC)** and **K-fold cross-validation**.
@@ -66,20 +68,53 @@ $$ g(\overline{x}; \Theta) = \phi (\overline{\theta}_{j} \cdot \phi (\overline{\
 
 Here we think about the sum and products as dot products.  The name "neural network" comes from interpreting each matrix as a layer of neurons and each column in the matrix as corresponding to the weights a particular neuron assigns to its inputs (the rows in the matrix).  Intuitively, we can think of each neuron weighing its inputs (the entries in the column) and then summing over those inputs.  This sum is then fed to a non-linear function, sometimes called an activation function, which decides how the neuron "fires" in response to its inputs.
 
-In my neural networks, I used an ensemble of models.  Those models varied from 1 to 5 layers with between 4 to 100 neurons per layer.  I also experimented with neural networks that "compressed" information by moving from larger layers (more neurons) to smaller layers (less neurons) on a fixed number of 180 neurons.
+Every neural network model used the **rectified linear unit (RELU)** given by $\max (0, \overline{x})$.
 
-The key parameters that drive the ability for linear classifiers and neural networks are the weights.  Initially, these weights are random, but over time, a machine learning model learns these weights via a learning algorithm.  The algorithm of choice is stochastic gradient descent.  Intuively, gradient descent is an optimization procedure through parameter space that adjusts parameters by following the contours of that space to valleys called local minima.  In the case of model optimization, a model's parameters are adjusted by decreasing the weights that contributed to the model's error on the training data set.  This can be expensive, however, so we only evaluate the model's error rate on a small sample of training data.  Our random sampling procedure is what makes this "stochastic".
+The key parameters that drive the ability for linear classifiers and neural networks are the weights.  Initially, these weights are random, but over time, a machine learning model learns these weights via a learning algorithm.  The algorithm of choice is stochastic gradient descent.  Intuively, gradient descent is an optimization procedure through parameter space that adjusts parameters by following the contours of that space to valleys called local minima.  In the case of model optimization, a model's parameters are adjusted by decreasing the weights that contributed to the model's error on the training data set by some parameter $\eta$ called the learning rate.  This can be expensive, however, so we only evaluate the model's error rate on a small sample of training data.  Our random sampling procedure is what makes this "stochastic".
 
 I used the **Adam optimizer** found in `pytorch` to implement gradient descent.
 
-Regularization is collection of methods that aim to prevent models from simply memorizing (overfitting) the data.  The goal for a good predictive algorithm is that it can generalize to new instances it has not seen so far.  Intuitively, regularization can be thought of penalizing models for their complexity and encouraging simplicity.  The regularization methods I used include L2, early stopping, and dropout.  L2 regularization modifies the error (or loss or cost) function by adding to the error the sum of the square of the weights multiplied by a $\lambda$ parameter; the thought is that bigger weights lead to more overfitting so those bigger weights are penalized by some factor $\lambda$.  Early stopping is a method by which we stop models early in the training process to prevent them from committing too much memorization.  Dropout is an ensemble method for regularization.  It works by forcing the model during training to use only a certain portion of its parameters for making predictions.  This can be thought of as a "wisdom of the crowds" method because the model is really an ensemble of simpler predictors after drop out training.
+Regularization is collection of methods that aim to prevent models from simply memorizing (overfitting) the data.  The goal for a good predictive algorithm is that it can generalize to new instances it has not seen so far.  Intuitively, regularization can be thought of penalizing models for their complexity and encouraging simplicity.  The regularization methods I used include L2, early stopping, and dropout.  L2 regularization modifies the error (or loss or cost) function by adding to the error the sum of the square of the weights multiplied by a $\lambda$ parameter; the thought is that bigger weights lead to more overfitting so those bigger weights are penalized by some factor $\lambda$.  Early stopping is a method by which we stop models early in the training process to prevent them from committing too much memorization.  Dropout is an bagging method for regularization.  It works by forcing the model during training to use only a certain portion of its parameters for making predictions.  This can be thought of as a "wisdom of the crowds" method because the model is really an ensemble of simpler predictors after drop out training.
 
 I used the applicable functions for L2 and dropout found in `pytorch`.  Early stopping was directly implemented by my code.
 
 ## Experiments
 
-I conducted a series of experiments with linear classifiers and neural networks.  The first experiments were with linear classifiers to find a good baseline for evaluating model performance.
+I conducted a series of experiments with linear classifiers and neural networks.  The first experiments were with linear classifiers to find a good baseline for evaluating model performance.  This was also used to evaluate whether the integer or one-hot encoding would be best for the data sets.
+
+My initial experiments with neural networks was to find the right number of parameters and number of transformations (layers) for the problem before us.  I ran a series of experiments to find the best ROC-AUC on the validation sets.  Networks varied in depth from 1 to 5 layers with up to 100 neurons per layer.  Models were trained for 10 epochs (10 passes of the training data) with a learning rate $0.001$.  I settled on this learning rate after some initial experimentation, and research on best practice.
+
+I also experimented with neural networks that "compressed" information by moving from larger layers (more neurons) to smaller layers (less neurons) on a fixed number of 180 neurons.  The compression of a network is the degree to which moving from smaller and smaller layer sizes affects accuracy.  Here my experiments specifically tested whether a wider initial layer than the number of inputs was better or whether increasing the number of compressions improved performance.
+
+Next I tested L2 regularization.  $\lambda$ values from 0 (meaning to no regularization penalty) to 0.5 (meaning big weights were heavily penalized).  The model used here and in other regularization tests had 4 layers and 64 neurons per layer.
+
+Early stopping was tested by increasing the number of training epochs up to 300 in increments of 10.  This resulted in a total of 30 training runs.
+
+Finally, dropout was tested with dropout rates between 0, indicating no neurons were temporarily deleted, to 1, indicating all neurons were deleted.
 
 ## Results
+
+The first results on linear classifiers with ROC-AUC can be found below.  I found that performance was close between integer and one-hot encoding for features, though one-hot encoding performed slightly better.  Consequently, I used one-hot encoding for the remainder of the experiments.
+
+Model | Train AUC | Validation AUC
+:----:|:---------:|:--------------:
+Integer | $0.66$ | $0.6580$
+One-Hot | $0.6615$ | $0.6599$
+
+My results for experiments on different network architectures showed deeper and fewer parameters was better.  A plot for network validation ROC-AUC can be found below, where the X-axis represents the number of neurons per layer and the Y-axis indicates the number of layers.  It was discovered that the optimum network had 4 layers with 4 neurons each for a total for 16 neurons.
+
+![networks plot](Images/laynodes_va-3.png)
+
+The results for compression ratios and numbers can be found in the table below.  Overall, wider initial inputs was found to improve performance and only one compression was beneficial for performance.
+
+Compression Ratios | Compression Stages
+:-----------------:|:------------------:
+![comp ratios](Images/compr_ratio-3.png) | ![comp stages](Images/compr_stage-2.png)
+
+The results for various regularization techniques are found in the table below.  L2 regularization was disappointing.  Overall, any L2 penalty above 0 dramatically decreased model performance.  Early stopping performed slightly better.  Basically, the sooner the network stopped, the better its validation ROC-AUC score.  Lastly, dropout showed little affect on performance until the dropout rate exceeded 0.8.
+
+L2 Regularization | Early Stopping | Dropout
+:----------------:|:--------------:|:-------:
+![L2](Images/l2reg-2.png) | ![early](Images/early_stopping-3.png) | ![dropout](Images/dropout.png)
 
 ## Discussion
